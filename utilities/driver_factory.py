@@ -32,9 +32,16 @@ class DriverFactory:
 
         logger.info("Configuring Chrome options.")
 
+        if self.config.is_headless():
+            logger.info("Running Chrome in headless mode.")
+            options.add_argument("--headless=new")
+
         options.add_argument("--guest")
         options.add_argument("--disable-notifications")
         options.add_argument("--disable-popup-blocking")
+
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
 
         options.add_experimental_option(
             "prefs",
