@@ -21,6 +21,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Allure
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y default-jre
+         wget https://github.com/allure-framework/allure2/releases/download/2.34.1/allure-2.34.1.tgz
+         tar -zxvf allure-2.34.1.tgz
+         sudo mv allure-2.34.1 /opt/allure
+         sudo ln -s /opt/allure/bin/allure /usr/bin/allure    
+
       - name: Run Automation Tests
         run: |
-          pytest --browser=chrome --env=qa
+          pytest --browser=chrome --env=qa --alluredir=allure-results
+
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
