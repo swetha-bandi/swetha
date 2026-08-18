@@ -75,3 +75,5 @@ Whenever code is pushed to GitHub:
 ## Author
 
 Swetha
+
+Git practice started.
